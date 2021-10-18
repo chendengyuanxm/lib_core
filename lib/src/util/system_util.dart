@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lib_core/util/index.dart';
+import 'toast_util.dart';
 
 /// 系统工具类
 class SystemUtil {

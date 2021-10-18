@@ -1,5 +1,5 @@
 import 'package:lib_core/generated/json/base/json_convert_content.dart';
-import 'package:lib_core/net/abstract_http_client.dart';
+import 'package:lib_core/src/net/abstract_http_client.dart';
 import 'package:dio/dio.dart';
 import 'http_options.dart';
 import 'http_request_exception.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lib_core/service/index.dart';
 import 'package:provider/provider.dart';
 import 'provider/core_providers.dart';
+import 'service/index.dart';
 
 void runPreMain() {
   WidgetsFlutterBinding.ensureInitialized();

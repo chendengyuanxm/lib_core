@@ -1,6 +1,6 @@
 import 'package:floor/floor.dart';
-import 'package:lib_core/db/dao/user_dao.dart';
-import 'package:lib_core/db/entity/user.dart';
+import 'package:lib_core/src/db/dao/user_dao.dart';
+import 'package:lib_core/src/db/entity/user.dart';
 
 part 'db.g.dart';
 

@@ -1,4 +1,4 @@
-import 'package:lib_core/model/user_info_entity.dart';
+import 'package:lib_core/src/model/user_info_entity.dart';
 
 userInfoFromJson(UserInfo data, Map<String, dynamic> json) {
 	if (json['name'] != null) {

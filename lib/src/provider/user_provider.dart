@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:lib_core/model/user_info_entity.dart';
+import 'package:lib_core/src/model/user_info_entity.dart';
 
 class UserProvider extends ChangeNotifier {
   UserInfo? _userInfo;

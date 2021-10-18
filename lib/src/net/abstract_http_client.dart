@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:lib_core/service/index.dart';
-import 'package:lib_core/service/navigation_service.dart';
-import 'package:lib_core/util/index.dart';
+import 'package:lib_core/src/service/index.dart';
+import 'package:lib_core/src/service/navigation_service.dart';
+import 'package:lib_core/src/util/index.dart';
 import 'default_transformer.dart';
 import 'error_code.dart';
 import 'http_options.dart';

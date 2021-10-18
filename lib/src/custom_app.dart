@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lib_core/provider/localization_provider.dart';
-import 'package:lib_core/provider/theme_provider.dart';
-import 'package:lib_core/service/index.dart';
+import 'package:lib_core/src/provider/localization_provider.dart';
+import 'package:lib_core/src/provider/theme_provider.dart';
+import 'package:lib_core/src/service/index.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
