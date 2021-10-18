@@ -1,3 +1,3 @@
 export 'locator.dart';
 export 'navigation_service.dart';
-export 'local_database_service.dart';
+export 'database_service.dart';
