@@ -15,6 +15,12 @@ class LogUtil {
     _maxLen = maxLen;
   }
 
+  static void i(Object object, {String? tag}) {
+    if (_debugMode) {
+      _printLog(tag, ' v ', object);
+    }
+  }
+
   static void e(Object object, {String? tag}) {
     _printLog(tag, ' e ', object);
   }

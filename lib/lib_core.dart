@@ -1,5 +1,6 @@
 library lib_core;
 
+export 'src/lib_core_plugin.dart';
 export 'src/base/base_state.dart';
 export 'src/base/base_stateful_widget.dart';
 export 'src/ext/index.dart';
