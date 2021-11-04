@@ -37,7 +37,7 @@ class HttpClient {
 
   static initConfig(IHttpConfig httpConfig) {
     _httpConfig = httpConfig;
-    HttpCode.successCodeList = httpConfig.configHttpResultSuccessCodeList;
+    HttpCode.successCodeList = httpConfig.successCodeList;
 
     _dio = Dio();
     _dio.options = httpConfig.configBaseOptions();
@@ -47,7 +47,7 @@ class HttpClient {
       _dio.interceptors.addAll(httpConfig.configInterceptors()!);
     }
 
-    if (httpConfig.configLogEnable()) {
+    if (httpConfig.isLogEnable) {
       _dio.interceptors.add(LogsInterceptors());
     }
 
@@ -195,9 +195,9 @@ class HttpClient {
     bool? isCheckNetwork,
   }) async {
     /// 设置默认值
-    isShowProgress ??= _httpConfig.isShowProgress();
-    loadingText ??= _httpConfig.configLoadingText();
-    isCheckNetwork ??= _httpConfig.isCheckNetwork();
+    isShowProgress ??= _httpConfig.isShowProgress;
+    loadingText ??= _httpConfig.defaultLoadingText;
+    isCheckNetwork ??= _httpConfig.isCheckNetwork;
 
     if (isCheckNetwork) {
       ///判断网络连接

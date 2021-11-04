@@ -9,23 +9,21 @@ import '../http_code.dart';
 /// @description: 网络配置类接口
 abstract class IHttpConfig {
 
+  List get successCodeList;
+
+  bool get isLogEnable => true;
+
+  bool get isShowProgress => true;
+
+  String get defaultLoadingText => 'loading...';
+
+  bool get isCheckNetwork => true;
+
   BaseOptions configBaseOptions();
-
-  List get configHttpResultSuccessCodeList;
-
-  bool configLogEnable() {
-    return true;
-  }
 
   List<Interceptor>? configInterceptors();
 
   bool configHttps(X509Certificate cert, String host, int port);
 
   Future<HttpResult<T>> parseResult<T>(int statusCode, Map<String, dynamic> json, bool isList);
-
-  bool isShowProgress();
-
-  String configLoadingText();
-
-  bool isCheckNetwork();
 }

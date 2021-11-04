@@ -22,20 +22,5 @@ abstract class DefaultHttpConfig extends IHttpConfig {
   }
 
   @override
-  String configLoadingText() {
-    return 'loading...';
-  }
-
-  @override
-  bool isCheckNetwork() {
-    return true;
-  }
-
-  @override
-  bool isShowProgress() {
-    return true;
-  }
-
-  @override
   Future<HttpResult<T>> parseResult<T>(int statusCode, Map<String, dynamic> json, bool isList);
 }
