@@ -11,9 +11,7 @@ abstract class IHttpConfig {
 
   BaseOptions configBaseOptions();
 
-  List<int> configHttpResultSuccessCodeList() {
-    return HttpCode.successCodeList;
-  }
+  List get configHttpResultSuccessCodeList;
 
   bool configLogEnable() {
     return true;
@@ -23,7 +21,7 @@ abstract class IHttpConfig {
 
   bool configHttps(X509Certificate cert, String host, int port);
 
-  Future<HttpResult<T>> parseResult<T>(Map<String, dynamic> json, bool isList);
+  Future<HttpResult<T>> parseResult<T>(int statusCode, Map<String, dynamic> json, bool isList);
 
   bool isShowProgress();
 

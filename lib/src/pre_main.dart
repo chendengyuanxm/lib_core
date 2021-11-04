@@ -13,7 +13,7 @@ void runPreMain() {
 void runPreApp(Widget app) {
   runApp(
     MultiProvider(
-      providers: core_providers,
+      providers: coreProviders,
       child: app,
     ),
   );

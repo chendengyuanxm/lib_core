@@ -42,10 +42,10 @@ class LogUtil {
         '$tag$stag — — — — — — — — — — — — — — — — st — — — — — — — — — — — — — — — —');
     while (da.isNotEmpty) {
       if (da.length > _maxLen) {
-        print("$tag$stag| ${da.substring(0, _maxLen)}");
+        print("${da.substring(0, _maxLen)}");
         da = da.substring(_maxLen, da.length);
       } else {
-        print("$tag$stag| $da");
+        print("$da");
         da = "";
       }
     }

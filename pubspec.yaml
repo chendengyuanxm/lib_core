@@ -125,6 +125,3 @@ flutter:
     androidX: true
     androidPackage: com.devin.lib_core
     iosBundleIdentifier: com.devin.libCore
-
-flutter_intl:
-  enabled: true

@@ -3,7 +3,7 @@ class HttpCode {
   HttpCode._();
 
   /// 成功码
-  static List<int> successCodeList = [200, 201, 204];
+  static List successCodeList = [];
 
   static const String defaultError = "-1";
   /// 未知错误

@@ -9,3 +9,4 @@ export 'src/provider/index.dart';
 export 'src/service/index.dart';
 export 'src/util/index.dart';
 export 'src/pre_main.dart';
+export 'src/i_core_config.dart';

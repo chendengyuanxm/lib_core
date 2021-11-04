@@ -1,5 +1,5 @@
 class HttpRequestException implements Exception {
-  final String statusCode;
+  final int? statusCode;
   final String errCode;
   final String errMsg;
 

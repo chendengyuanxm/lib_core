@@ -37,5 +37,5 @@ abstract class DefaultHttpConfig extends IHttpConfig {
   }
 
   @override
-  Future<HttpResult<T>> parseResult<T>(Map<String, dynamic> json, bool isList);
+  Future<HttpResult<T>> parseResult<T>(int statusCode, Map<String, dynamic> json, bool isList);
 }

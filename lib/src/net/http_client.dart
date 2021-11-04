@@ -16,14 +16,14 @@ import 'interface/i_http_config.dart';
 /// @date: 2021/10/27 14:43
 /// @description: 网络请求类
 class HttpClient {
-  static HttpClient _instance = HttpClient._();
-  static late IHttpConfig _httpConfig;
-  static late Dio _dio;
-
   static const String GET = "GET";
   static const String POST = "POST";
   static const String DELETE = "DELETE";
   static const String PUT = "PUT";
+
+  static HttpClient _instance = HttpClient._();
+  static late IHttpConfig _httpConfig;
+  static late Dio _dio;
 
   bool _showLoading = false;
   List<CancelToken> _cancelTokenList = [];
@@ -37,27 +37,29 @@ class HttpClient {
 
   static initConfig(IHttpConfig httpConfig) {
     _httpConfig = httpConfig;
+    HttpCode.successCodeList = httpConfig.configHttpResultSuccessCodeList;
+
     _dio = Dio();
-    _dio.options = _httpConfig.configBaseOptions();
+    _dio.options = httpConfig.configBaseOptions();
     _dio.transformer = FlutterTransformer();
 
-    if (_httpConfig.configInterceptors() != null) {
-      _dio.interceptors.addAll(_httpConfig.configInterceptors()!);
+    if (httpConfig.configInterceptors() != null) {
+      _dio.interceptors.addAll(httpConfig.configInterceptors()!);
     }
 
-    if (_httpConfig.configLogEnable()) {
+    if (httpConfig.configLogEnable()) {
       _dio.interceptors.add(LogsInterceptors());
     }
 
     (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate = (client) {
       client.badCertificateCallback = (X509Certificate cert, String host, int port) {
         ///true：忽略证书校验
-        return _httpConfig.configHttps(cert, host, port);
+        return httpConfig.configHttps(cert, host, port);
       };
     };
   }
 
-  Future<T?> get<T>(
+  Future<HttpResult<T>> get<T>(
     String url,
     Map<String, dynamic> queryParams, {
     Options? options,
@@ -77,7 +79,7 @@ class HttpClient {
     );
   }
 
-  Future<T?> post<T>(
+  Future<HttpResult<T>> post<T>(
     String url,
     Map<String, dynamic> queryParams, {
     dynamic body,
@@ -100,7 +102,7 @@ class HttpClient {
     );
   }
 
-  Future<T?> delete<T>(
+  Future<HttpResult<T>> delete<T>(
     String url,
     Map<String, dynamic> queryParams, {
     dynamic body,
@@ -123,7 +125,7 @@ class HttpClient {
     );
   }
 
-  Future<T?> put<T>(
+  Future<HttpResult<T>> put<T>(
     String url,
     Map<String, dynamic> queryParams, {
     dynamic body,
@@ -181,7 +183,7 @@ class HttpClient {
     return isSuccess;
   }
 
-  Future<T?> _request<T>(
+  Future<HttpResult<T>> _request<T>(
     String method,
     url, {
     data,
@@ -201,7 +203,7 @@ class HttpClient {
       ///判断网络连接
       ConnectivityResult connResult = await Connectivity().checkConnectivity();
       if (connResult == ConnectivityResult.none) {
-        throw HttpRequestException('-1', HttpCode.networkError, '无网络连接，请检查网络设置');
+        throw HttpRequestException(-1, HttpCode.networkError, '无网络连接，请检查网络设置');
       }
     }
 
@@ -219,19 +221,19 @@ class HttpClient {
 
     try {
       Response resp = await _dio.request(url, data: data, queryParameters: queryParameters, options: options, cancelToken: cancelToken);
-      HttpResult result = await _handleResult<T>(resp, false);
+      HttpResult<T> result = await _handleResult<T>(resp, false);
       if (result.success) {
-        return result.data;
+        return result;
       } else {
-        throw HttpRequestException(result.httpCode!, result.code, result.message!);
+        throw HttpRequestException(result.httpCode, result.code, result.message!);
       }
     } on DioError catch (dioErr) {
       LogUtil.e(dioErr);
       ErrorResult result = _createErrorBean(dioErr);
-      throw HttpRequestException(result.httpCode!, result.code, result.message!);
+      throw HttpRequestException(result.httpCode, result.code, result.message!);
     } on Error catch (e) {
       LogUtil.e(e.stackTrace.toString());
-      throw HttpRequestException('-1', HttpCode.unKnowError, e.toString());
+      throw HttpRequestException(-1, HttpCode.unKnowError, e.toString());
     } finally {
       if (isShowProgress && _showLoading) {
         _dismissProgress();
@@ -251,7 +253,7 @@ class HttpClient {
       return result;
     }
 
-    HttpResult<T> result = await _httpConfig.parseResult<T>(resp.data, isList);
+    HttpResult<T> result = await _httpConfig.parseResult<T>(resp.statusCode!, resp.data, isList);
     result.json = resp.data;
     return result;
   }
