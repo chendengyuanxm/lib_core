@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 
 GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
 GlobalKey<NavigatorState> get navigationKey => _navigationKey;
+NavigatorState get navigator => _navigationKey.currentState!;
 
 class NavigationService {
-
-  NavigatorState get navigator => _navigationKey.currentState!;
-
   get pushNamed => navigator.pushNamed;
 
   get push => navigator.push;
