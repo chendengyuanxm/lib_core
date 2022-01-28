@@ -8,3 +8,4 @@ export 'toast_util.dart';
 export 'string_util.dart';
 export 'codec_util.dart';
 export 'system_util.dart';
+export 'cache_util.dart';

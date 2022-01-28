@@ -30,6 +30,8 @@ extension StringExt on String? {
           (this != null && this!.isEmpty) ||
           (this != null && this! == 'null');
 
+  int get safeLength => validate().length;
+
   /// Check null string, return given value if null
   String validate({String value = ''}) {
     if (this.isEmptyOrNull) {

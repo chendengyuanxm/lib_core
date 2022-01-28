@@ -18,6 +18,14 @@ extension ListExt<T> on List<T>? {
     }
   }
 
+  /// Generate map but gives index for it
+  Iterable<E> mapIndexed<E>(E toElement(T element, int index)) {
+    var index = 0;
+    return this.validate().map<E>((e) {
+      return toElement(e, index ++);
+    });
+  }
+
   /// Generate forEach but gives index for each element
   void forEachIndexed(void action(T element, int index)) {
     var index = 0;

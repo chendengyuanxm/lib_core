@@ -23,7 +23,7 @@ abstract class BaseState<T extends BaseStatefulWidget> extends State<T> with Wid
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    switch(state){
+    switch(state) {
       case AppLifecycleState.resumed:
         checkPermissions();
         break;

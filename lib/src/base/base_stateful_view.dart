@@ -8,7 +8,11 @@ import 'package:permission_handler/permission_handler.dart';
 ///
 abstract class BaseStatefulView<T extends BaseController> extends StatelessWidget with WidgetsBindingObserver {
 
-  BaseStatefulView();
+  const BaseStatefulView({Key? key}) : super(key: key);
+
+  final String? tag = null;
+
+  T get controller => Get.find<T>(tag: tag);
 
   void initState(GetBuilderState state) {
     WidgetsBinding.instance?.addObserver(this);
@@ -23,18 +27,15 @@ abstract class BaseStatefulView<T extends BaseController> extends StatelessWidge
 
   void didUpdateWidget(GetBuilder oldWidget, GetBuilderState<T> state) {}
 
-  T? getController();
+  Widget buildWidget(BuildContext context, T controller);
 
-  Widget buildWidget(T controller);
+  BuildContext? get context => Get.context;
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<T>(
-      init: getController(),
-      builder: (controller) {
-        // this.controller = controller;
-        return buildWidget.call(controller);
-      },
+      init: controller,
+      builder: (controller) => buildWidget.call(context, controller),
       initState: initState,
       dispose: dispose,
       didChangeDependencies: didChangeDependencies,

@@ -4,13 +4,8 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:lib_core/lib_core.dart';
-import 'package:lib_core/src/net/model/error_result.dart';
-import 'package:lib_core/src/util/index.dart';
 import 'default_transformer.dart';
-import 'http_code.dart';
-import 'http_request_exception.dart';
 import 'interceptors/log_interceptor.dart';
-import 'interface/i_http_config.dart';
 
 /// @author: Devin
 /// @date: 2021/10/27 14:43
@@ -68,7 +63,7 @@ class HttpClient {
     String? loadingText,
     bool? isCheckNetwork,
   }) {
-    return _request<T>(
+    return request<T>(
       GET,
       url,
       queryParameters: queryParams,
@@ -89,7 +84,7 @@ class HttpClient {
     String? loadingText,
     bool? isCheckNetwork,
   }) {
-    return _request<T>(
+    return request<T>(
       POST,
       url,
       data: body == null ? {} : body,
@@ -112,7 +107,7 @@ class HttpClient {
     String? loadingText,
     bool? isCheckNetwork,
   }) {
-    return _request<T>(
+    return request<T>(
       DELETE,
       url,
       data: body,
@@ -135,7 +130,7 @@ class HttpClient {
     String? loadingText,
     bool? isCheckNetwork,
   }) {
-    return _request<T>(
+    return request<T>(
       PUT,
       url,
       data: body == null ? {} : body,
@@ -183,7 +178,7 @@ class HttpClient {
     return isSuccess;
   }
 
-  Future<HttpResult<T>> _request<T>(
+  Future<HttpResult<T>> request<T>(
     String method,
     url, {
     data,

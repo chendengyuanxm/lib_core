@@ -16,4 +16,20 @@ class StringUtil {
     return RegExp(pattern).hasMatch(cardNo);
   }
 
+  static String formatByte(int size) {
+    int GB = 1024 * 1024 * 1024;
+    int MB = 1024 * 1024;
+    int KB = 1024;
+    String result ='';
+    if(size / GB >= 1){
+      result = (size / GB).toStringAsFixed(2) +'GB';
+    } else if(size / MB >= 1){
+      result = (size / MB).toStringAsFixed(2) +'MB';
+    } else if(size / KB >= 1){
+      result = (size / KB).toStringAsFixed(2) +'KB';
+    } else {
+      result = size.toString() + 'B';
+    }
+    return result;
+  }
 }
