@@ -63,7 +63,7 @@ class _BaseState extends State<BaseView> with WidgetsBindingObserver {
     Map<Permission, PermissionStatus> statuses = await unGrantedPermissions.request();
     bool verified = verifyPermissions(statuses);
     if (!verified) {
-      bool confirmed = await DialogUtil.showAlertDialog(context, content: '未获取相关权限，是否前往设置？');
+      bool? confirmed = await DialogUtil.showAlertDialog(context, content: '未获取相关权限，是否前往设置？');
       if (confirmed != null && confirmed) {
         await openAppSettings();
       }

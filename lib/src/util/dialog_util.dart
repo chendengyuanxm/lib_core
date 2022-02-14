@@ -7,7 +7,7 @@ typedef NegativeCallback = void Function();
 typedef String ItemAsString<T>(T item);
 
 class DialogUtil {
-  static Future<bool> showConfirmDialog(BuildContext context, {
+  static Future<bool?> showConfirmDialog(BuildContext context, {
     String? content,
     String? positiveText,
     Function? onConfirm,

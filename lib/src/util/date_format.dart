@@ -330,9 +330,12 @@ formatDateString(
 }
 
 formatDateTimestamp(
-  int timeStamp, {
-  List<String> formats: const [yyyy, '年', mm, '月', dd, '日 ', HH, ':', nn],
+  int? timeStamp, {
+  List<String> formats: const [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn],
 }) {
+  if (timeStamp == null)
+    return '';
+
   try {
     DateTime date = DateTime.fromMillisecondsSinceEpoch(timeStamp, isUtc: false);
     return formatDate(date, formats);

@@ -35,11 +35,13 @@ class LogUtil {
     String da = object.toString();
     tag = tag ?? _tagValue;
     if (da.length <= _maxLen) {
-      print("$tag$stag $da");
+      print('————————————————————————————$tag——————————————————————————————————');
+      print("$da");
+      print('———————————————————————————————————————————————————————————————————');
       return;
     }
     print(
-        '$tag$stag — — — — — — — — — — — — — — — — st — — — — — — — — — — — — — — — —');
+        '————————————————————————————$tag——————————————————————————————————');
     while (da.isNotEmpty) {
       if (da.length > _maxLen) {
         print("${da.substring(0, _maxLen)}");
@@ -49,7 +51,6 @@ class LogUtil {
         da = "";
       }
     }
-    print(
-        '$tag$stag — — — — — — — — — — — — — — — — ed — — — — — — — — — — — — — — — —');
+    print('———————————————————————————————————————————————————————————————————');
   }
 }
