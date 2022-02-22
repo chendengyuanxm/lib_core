@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
 GlobalKey<NavigatorState> get navigationKey => _navigationKey;
-NavigatorState get navigator => _navigationKey.currentState!;
+NavigatorState get navigation => _navigationKey.currentState!;
 
 class NavigationService {
-  get pushNamed => navigator.pushNamed;
+  get pushNamed => navigation.pushNamed;
 
-  get push => navigator.push;
+  get push => navigation.push;
 
-  get pushReplace => navigator.pushReplacement;
+  get pushReplace => navigation.pushReplacement;
 
-  get pop => navigator.pop;
+  get pop => navigation.pop;
 
-  get pushNamedAndRemoveUntil => navigator.pushNamedAndRemoveUntil;
+  get pushNamedAndRemoveUntil => navigation.pushNamedAndRemoveUntil;
 
   pushPage(Widget page) {
     return push(_buildRoute(page));
