@@ -5,4 +5,5 @@ import 'package:flutter/material.dart';
 /// @description: 
 abstract class ICoreConfig {
   List<Locale> get supportedLocales;
+  MaterialColor get primaryColor;
 }

@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 GlobalKey<NavigatorState> _navigationKey = GlobalKey<NavigatorState>();
 GlobalKey<NavigatorState> get navigationKey => _navigationKey;
 NavigatorState get navigation => _navigationKey.currentState!;
+final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
 class NavigationService {
   get pushNamed => navigation.pushNamed;
