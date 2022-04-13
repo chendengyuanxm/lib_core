@@ -23,9 +23,9 @@ class SharedPreference {
     return prefs.setInt(key, value);
   }
 
-  static Future<bool?> getBool(String key) async {
+  static Future<bool?> getBool(String key, {bool? defaultValue}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.containsKey(key) ? prefs.getBool(key) : false;
+    return prefs.containsKey(key) ? prefs.getBool(key) : defaultValue ?? false;
   }
 
   static Future<bool> setBool(String key, bool value) async {
