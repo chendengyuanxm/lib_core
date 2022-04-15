@@ -23,4 +23,7 @@ class _BaseState extends State<BaseView> with WidgetsBindingObserver, Permission
   @override
   Widget build(BuildContext context) => widget.build(context);
 
+  @override
+  List<Permission> getCheckPermissions() => widget.checkPermissions ?? [];
+
 }

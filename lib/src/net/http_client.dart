@@ -288,7 +288,8 @@ class HttpClient {
   _dismissProgress() {
     if (_showLoading) {
       _showLoading = false;
-      locator<NavigationService>().pop();
+      BuildContext context = navigationKey.currentState!.overlay!.context;
+      Navigator.of(context).pop();
     }
   }
 
