@@ -69,7 +69,7 @@ abstract class BaseStatefulView<T extends BaseController> extends StatelessWidge
     Map<Permission, PermissionStatus> statuses = await unGrantedPermissions.request();
     bool verified = verifyPermissions(statuses);
     if (!verified) {
-      bool confirmed = await DialogUtil.showAlertDialog(Get.context!, content: '未获取相关权限，是否前往设置？');
+      bool? confirmed = await DialogUtil.showAlertDialog(Get.context!, content: '未获取相关权限，是否前往设置？');
       if (confirmed != null && confirmed) {
         await openAppSettings();
       }
