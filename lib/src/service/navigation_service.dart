@@ -17,6 +17,10 @@ class NavigationService {
 
   get pushNamedAndRemoveUntil => navigation.pushNamedAndRemoveUntil;
 
+  get popAndPushNamed => navigation.popAndPushNamed;
+
+  get popUntil => navigation.popUntil;
+
   pushPage(Widget page) {
     return push(_buildRoute(page));
   }

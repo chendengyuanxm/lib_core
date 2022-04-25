@@ -194,27 +194,28 @@ class HttpClient {
     loadingText ??= _httpConfig.defaultLoadingText;
     isCheckNetwork ??= _httpConfig.isCheckNetwork;
 
-    if (isCheckNetwork) {
-      ///判断网络连接
-      ConnectivityResult connResult = await Connectivity().checkConnectivity();
-      if (connResult == ConnectivityResult.none) {
-        throw HttpRequestException(-1, HttpCode.networkError, '无网络连接，请检查网络设置');
-      }
-    }
-
-    options ??= Options();
-    options.method = method;
-
-    /// 设置cancelToken
-    cancelToken ??= CancelToken();
-    _cancelTokenList.add(cancelToken);
-
-    /// 显示加载框
-    if (isShowProgress && !_showLoading) {
-      _showProgress(loadingText);
-    }
-
+    bool isAlreadyLoading = _showLoading;
     try {
+      /// 显示加载框
+      if (isShowProgress && !isAlreadyLoading) {
+        _showProgress(loadingText);
+      }
+
+      if (isCheckNetwork) {
+        ///判断网络连接
+        ConnectivityResult connResult = await Connectivity().checkConnectivity();
+        if (connResult == ConnectivityResult.none) {
+          throw HttpRequestException(-1, HttpCode.networkError, '无网络连接，请检查网络设置');
+        }
+      }
+
+      options ??= Options();
+      options.method = method;
+
+      /// 设置cancelToken
+      cancelToken ??= CancelToken();
+      _cancelTokenList.add(cancelToken);
+
       Response resp = await _dio.request(url, data: data, queryParameters: queryParameters, options: options, cancelToken: cancelToken);
       HttpResult<T> result = await _handleResult<T>(resp, false);
       if (result.success) {
@@ -230,7 +231,7 @@ class HttpClient {
       LogUtil.e(e.stackTrace.toString());
       throw HttpRequestException(-1, HttpCode.unKnowError, e.toString());
     } finally {
-      if (isShowProgress && _showLoading) {
+      if (isShowProgress && !isAlreadyLoading) {
         _dismissProgress();
       }
 
@@ -278,19 +279,17 @@ class HttpClient {
   }
 
   _showProgress(String text) {
-    if (!_showLoading) {
-      _showLoading = true;
+    _showLoading = true;
+    Future.delayed(Duration.zero, () {
       BuildContext context = navigationKey.currentState!.overlay!.context;
       DialogUtil.showLoadingDialog(context, message: text);
-    }
+    });
   }
 
   _dismissProgress() {
-    if (_showLoading) {
-      _showLoading = false;
-      BuildContext context = navigationKey.currentState!.overlay!.context;
-      Navigator.of(context).pop();
-    }
+    _showLoading = false;
+    BuildContext context = navigationKey.currentState!.overlay!.context;
+    Navigator.of(context).pop();
   }
 
   void addInterceptor(InterceptorsWrapper interceptor) {

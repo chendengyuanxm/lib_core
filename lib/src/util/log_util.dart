@@ -1,7 +1,7 @@
 
 class LogUtil {
   static const String _defTag = "debug";
-  static bool _debugMode = true;
+  static bool _debugMode = false;
   static int _maxLen = 128;
   static String _tagValue = _defTag;
 

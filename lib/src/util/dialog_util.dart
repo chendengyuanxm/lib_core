@@ -50,6 +50,7 @@ class DialogUtil {
   static Future showLoadingDialog(BuildContext context, {String message: 'loading...'}) async {
     return showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return Material(
             type: MaterialType.transparency,
