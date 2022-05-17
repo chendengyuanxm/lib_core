@@ -3,6 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lib_core/lib_core.dart';
 import 'default_transformer.dart';
 import 'interceptors/log_interceptor.dart';
@@ -281,15 +282,13 @@ class HttpClient {
   _showProgress(String text) {
     _showLoading = true;
     Future.delayed(Duration.zero, () {
-      BuildContext context = navigationKey.currentState!.overlay!.context;
-      DialogUtil.showLoadingDialog(context, message: text);
+      _httpConfig.showLoading(text);
     });
   }
 
   _dismissProgress() {
     _showLoading = false;
-    BuildContext context = navigationKey.currentState!.overlay!.context;
-    Navigator.of(context).pop();
+    _httpConfig.dismissLoading();
   }
 
   void addInterceptor(InterceptorsWrapper interceptor) {

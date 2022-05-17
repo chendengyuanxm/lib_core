@@ -23,14 +23,15 @@ mixin PermissionObserver<T extends StatefulWidget> on State<T>, WidgetsBindingOb
     super.dispose();
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    switch(state){
-      case AppLifecycleState.resumed:
-        checkPermissions();
-        break;
-    }
-  }
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   LogUtil.i('didChangeAppLifecycleState >> $state');
+  //   switch(state){
+  //     case AppLifecycleState.resumed:
+  //       checkPermissions();
+  //       break;
+  //   }
+  // }
 
   bool verifyPermissions(Map<Permission, PermissionStatus> statuses) {
     statuses.removeWhere((key, value) => value.isGranted);
@@ -48,7 +49,7 @@ mixin PermissionObserver<T extends StatefulWidget> on State<T>, WidgetsBindingOb
     Map<Permission, PermissionStatus> statuses = await unGrantedPermissions.request();
     bool verified = verifyPermissions(statuses);
     if (!verified) {
-      bool confirmed = await DialogUtil.showAlertDialog(context, content: '未获取相关权限，是否前往设置？');
+      bool? confirmed = await DialogUtil.showAlertDialog(context, content: '未获取相关权限，是否前往设置？');
       if (confirmed != null && confirmed) {
         await openAppSettings();
       }

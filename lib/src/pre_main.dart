@@ -20,7 +20,7 @@ void runPreMain() async {
   await _checkConnectivity();
   /// 调试开关
   _debugOptions();
-  /// 服务
+  /// 注册服务
   setupServices();
   Stetho.initialize();
   /// android 状态栏为透明的沉浸

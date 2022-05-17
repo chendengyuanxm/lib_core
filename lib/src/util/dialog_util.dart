@@ -44,7 +44,7 @@ class DialogUtil {
     String? buttonText,
     Function? onConfirm,
   }) async {
-    await showConfirmDialog(context, content: content, positiveText: buttonText, onConfirm: onConfirm, showCancel: false);
+    return await showConfirmDialog(context, content: content, positiveText: buttonText, onConfirm: onConfirm, showCancel: false);
   }
 
   static Future showLoadingDialog(BuildContext context, {String message: 'loading...'}) async {
