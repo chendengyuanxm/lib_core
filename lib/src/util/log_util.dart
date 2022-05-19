@@ -1,7 +1,7 @@
 
 class LogUtil {
   static const String _defTag = "debug";
-  static bool _debugMode = true;
+  static bool _debugMode = false;
   static int _maxLen = 128;
   static String _tagValue = _defTag;
 
@@ -16,9 +16,7 @@ class LogUtil {
   }
 
   static void i(Object? object, {String? tag}) {
-    if (_debugMode) {
-      _printLog(tag, ' v ', object);
-    }
+    _printLog(tag, ' i ', object);
   }
 
   static void e(Object? object, {String? tag}) {
