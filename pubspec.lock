@@ -7,14 +7,14 @@ packages:
       name: _fe_analyzer_shared
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "22.0.0"
+    version: "31.0.0"
   analyzer:
     dependency: transitive
     description:
       name: analyzer
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.7.2"
+    version: "2.8.0"
   archive:
     dependency: transitive
     description:
@@ -266,21 +266,21 @@ packages:
       name: floor
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   floor_annotation:
     dependency: transitive
     description:
       name: floor_annotation
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   floor_generator:
     dependency: "direct dev"
     description:
       name: floor_generator
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -480,6 +480,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.0.1"
+  lists:
+    dependency: transitive
+    description:
+      name: lists
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.1"
   logging:
     dependency: transitive
     description:
@@ -743,7 +750,7 @@ packages:
       name: source_gen
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.3"
+    version: "1.2.2"
   source_helper:
     dependency: transitive
     description:
@@ -814,6 +821,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0"
+  strings:
+    dependency: transitive
+    description:
+      name: strings
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.2"
   synchronized:
     dependency: transitive
     description:
@@ -849,6 +863,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.3.0"
+  unicode:
+    dependency: transitive
+    description:
+      name: unicode
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.1"
   url_launcher:
     dependency: "direct main"
     description:

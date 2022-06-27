@@ -43,7 +43,7 @@ dependencies:
   get_it: ^7.1.0
   package_info: ^2.0.2
   url_launcher: ^6.0.9
-  floor: ^1.1.0
+  floor: ^1.2.0
   # hive database
   hive: ^2.0.4
   hive_flutter: ^1.1.0
@@ -63,7 +63,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.9.1"
-  floor_generator: ^1.1.0
+  floor_generator: ^1.2.0
   hive_generator: ^1.1.1
 
 # Auto generate app icon

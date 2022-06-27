@@ -12,6 +12,8 @@ class NavigationService {
   get push => navigation.push;
 
   get pushReplace => navigation.pushReplacement;
+  
+  get pushReplacementNamed => navigation.pushReplacementNamed;
 
   get pop => navigation.pop;
 

@@ -1,52 +1,71 @@
 
+class LogConfig {
+  int? priority;
+  String? tag;
+  int? maxLen;
+
+  LogConfig({this.priority, this.tag, this.maxLen});
+}
+
 class LogUtil {
+  static const int VERBOSE = 2;
+  static const int DEBUG = 3;
+  static const int JSON = 4;
+  static const int INFO = 5;
+  static const int WARN = 6;
+  static const int ERROR = 7;
+
+  static int _logPriority = VERBOSE;
   static const String _defTag = "debug";
-  static bool _debugMode = true;
   static int _maxLen = 128;
   static String _tagValue = _defTag;
 
-  static void init({
-    String tag = _defTag,
-    bool isDebug = true,
-    int maxLen = 128,
-  }) {
-    _tagValue = tag;
-    _debugMode = isDebug;
-    _maxLen = maxLen;
-  }
-
-  static void i(Object? object, {String? tag}) {
-    _printLog(tag, ' i ', object);
-  }
-
-  static void e(Object? object, {String? tag}) {
-    _printLog(tag, ' e ', object);
+  static void init(LogConfig? config) {
+    _tagValue = config?.tag ?? _tagValue;
+    _logPriority = config?.priority ?? _logPriority;
+    _maxLen = config?.maxLen ?? _maxLen;
   }
 
   static void v(Object? object, {String? tag}) {
-    if (_debugMode) {
-      _printLog(tag, ' v ', object);
-    }
+    _printLog(VERBOSE, tag, object);
   }
 
-  static void _printLog(String? tag, String? stag, Object? object) {
-    String da = object?.toString() ?? 'null';
+  static void d(Object? object, {String? tag}) {
+    _printLog(DEBUG, tag, object);
+  }
+
+  static void i(Object? object, {String? tag}) {
+    _printLog(INFO, tag, object);
+  }
+
+  static void w(Object? object, {String? tag}) {
+    _printLog(WARN, tag, object);
+  }
+
+  static void e(Object? object, {String? tag}) {
+    _printLog(ERROR, tag, object);
+  }
+
+  static void _printLog(int priority, String? tag, Object? object) {
+    if (priority < _logPriority) return;
+
     tag = tag ?? _tagValue;
-    if (da.length <= _maxLen) {
-      print('————————————————————————————$tag$stag——————————————————————————————————');
-      print("$da");
+    String data = object?.toString() ?? 'null';
+    if (data.length <= _maxLen) {
+      print('————————————————————————————$tag$priority——————————————————————————————————');
+      print("$data");
       print('——————————————————————————————————————————————————————————————————————');
       return;
     }
     print(
-        '————————————————————————————$tag$stag————————————————————————————————————');
-    while (da.isNotEmpty) {
-      if (da.length > _maxLen) {
-        print("${da.substring(0, _maxLen)}");
-        da = da.substring(_maxLen, da.length);
+        '————————————————————————————$tag$priority————————————————————————————————————');
+    while (data.isNotEmpty) {
+      if (data.length > _maxLen) {
+        print("${data.substring(0, _maxLen)}");
+        data = data.substring(_maxLen, data.length);
       } else {
-        print("$da");
-        da = "";
+        print("$data");
+        data = "";
       }
     }
     print('——————————————————————————————————————————————————————————————————————');

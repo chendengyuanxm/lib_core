@@ -14,6 +14,7 @@ class LibCorePlugin {
     required ICoreConfig coreConfig,
     required IHttpConfig httpConfig,
     IToast? toast,
+    LogConfig? logConfig,
   }) {
     /// 初始化core config
     CoreConst.coreConfig = coreConfig;
@@ -21,5 +22,7 @@ class LibCorePlugin {
     HttpClient.initConfig(httpConfig);
     /// 初始化toast config
     ToastUtil.init(toast);
+    /// 初始化日志 config
+    LogUtil.init(logConfig);
   }
 }

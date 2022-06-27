@@ -3,6 +3,8 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'log_util.dart';
+
 class CacheUtil {
 
   static Future getAppDataSize() async {
@@ -26,11 +28,11 @@ class CacheUtil {
   static Future<double> getTotalSizeOfFilesInDir(final FileSystemEntity file) async {
     if (file is File) {
       int length = await file.length();
-      print('[file] ${file.path}');
+      LogUtil.v('[file] ${file.path}');
       return double.parse(length.toString());
     }
     if (file is Directory) {
-      print('[dir] ${file.path}');
+      LogUtil.v('[dir] ${file.path}');
       final List<FileSystemEntity> children = file.listSync();
       double total = 0;
       if (children != null)
@@ -84,7 +86,7 @@ class CacheUtil {
     }
 
     try {
-      print('[-file] ${file.path}');
+      LogUtil.v('[-file] ${file.path}');
       await file.delete();
     } catch (e) {
       print(e);

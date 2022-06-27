@@ -22,14 +22,14 @@ void runPreMain() async {
   _debugOptions();
   /// 注册服务
   setupServices();
-  Stetho.initialize();
   /// android 状态栏为透明的沉浸
   if (Platform.isAndroid) {
+    Stetho.initialize();
     SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
   /// 初始化FlutterDownload
-  // await FlutterDownloader.initialize(debug: true);
+  await FlutterDownloader.initialize(debug: true);
 }
 
 void runPreApp(Widget app) {
