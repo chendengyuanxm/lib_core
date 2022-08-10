@@ -222,12 +222,12 @@ class HttpClient {
       if (result.success) {
         return result;
       } else {
-        throw HttpRequestException(result.httpCode, result.code, result.message!);
+        throw HttpRequestException(result.httpCode, result.code, result.message);
       }
     } on DioError catch (dioErr) {
       LogUtil.e(dioErr);
       ErrorResult result = _createErrorBean(dioErr);
-      throw HttpRequestException(result.httpCode, result.code, result.message!);
+      throw HttpRequestException(result.httpCode, result.code, result.message);
     } on Error catch (e) {
       LogUtil.e(e.stackTrace.toString());
       throw HttpRequestException(-1, HttpCode.unKnowError, e.toString());

@@ -1,7 +1,7 @@
 class HttpRequestException implements Exception {
   final int? statusCode;
   final String errCode;
-  final String errMsg;
+  final String? errMsg;
 
   HttpRequestException(this.statusCode, this.errCode, this.errMsg);
 

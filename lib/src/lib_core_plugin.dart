@@ -15,7 +15,7 @@ class LibCorePlugin {
     required IHttpConfig httpConfig,
     IToast? toast,
     LogConfig? logConfig,
-  }) {
+  }) async {
     /// 初始化core config
     CoreConst.coreConfig = coreConfig;
     /// 初始化httpClient
@@ -24,5 +24,7 @@ class LibCorePlugin {
     ToastUtil.init(toast);
     /// 初始化日志 config
     LogUtil.init(logConfig);
+    /// 初始化SharePreferences
+    await SharedPreference.init();
   }
 }
