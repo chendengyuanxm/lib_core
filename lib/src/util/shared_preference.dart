@@ -9,16 +9,16 @@ class SharedPreference {
     prefs = await SharedPreferences.getInstance();
   }
 
-  static String? getString(String key) {
-    return prefs.containsKey(key) ? prefs.getString(key) : null;
+  static String? getString(String key, {String? defaultValue}) {
+    return prefs.containsKey(key) ? prefs.getString(key) : defaultValue;
   }
 
   static Future<bool> setString(String key, String value) async {
     return prefs.setString(key, value);
   }
 
-  static int? getInt(String key) {
-    return prefs.containsKey(key) ? prefs.getInt(key) : 0;
+  static int? getInt(String key, {int? defaultValue}) {
+    return prefs.containsKey(key) ? prefs.getInt(key) : defaultValue;
   }
 
   static Future<bool> setInt(String key, int value) {
