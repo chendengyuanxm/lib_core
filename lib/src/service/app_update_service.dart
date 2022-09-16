@@ -68,7 +68,7 @@ class AppUpdateService {
     String method = 'GET',
     bool silent = false,
   }) async {
-    LogUtil.v('check update');
+    LogUtil.i('check update');
     this.context = context;
     this.silent = silent;
     this.url = url;
@@ -108,7 +108,7 @@ class AppUpdateService {
     String json = jsonEncode(result.data);
     version = onUpdateParser?.call(json);
     if (version != null) {
-      apkName = 'xmcg-${version!.versionName}.apk';
+      apkName = 'app-${version!.versionCode}.apk';
       await _checkVersionCode();
       int timeStamp = DateTime.now().millisecondsSinceEpoch;
       await SharedPreference.setInt('lastUpdateTime', timeStamp);
@@ -122,7 +122,7 @@ class AppUpdateService {
     String _currentVersionCode = packageInfo.buildNumber;
     int serviceVersionCode = version!.versionCode;
     int currentVersionCode = int.parse(_currentVersionCode);
-    LogUtil.v('serviceVersionCode: $serviceVersionCode , currentVersionCode: $currentVersionCode');
+    LogUtil.i('serviceVersionCode: $serviceVersionCode , currentVersionCode: $currentVersionCode');
     if (serviceVersionCode > currentVersionCode) {
       _showUpdateDialog();
     } else if (!silent) {
@@ -155,9 +155,9 @@ class AppUpdateService {
     final path = await _apkLocalPath;
     File file = File(downloadPath + apkName);
     if (await file.exists()) {
-      // await file.delete();
-      await _installApk(path, apkName);
-      return;
+      LogUtil.i('delete ${file.path}');
+      await file.delete();
+      // await _installApk(path, apkName);
     }
 
     _downloadFile(version!.downloadUrl, _apkLocalPath, apkName);
@@ -165,7 +165,7 @@ class AppUpdateService {
 
   /// 下载APK文件
   _downloadFile(downloadUrl, savePath, apkName) async {
-    LogUtil.i('download url: $downloadUrl  save path: $savePath');
+    LogUtil.i('download url: $downloadUrl  save path: $savePath  apkName: $apkName');
     ProgressDialog pr = ProgressDialog(context: context);
     if (!pr.isOpen()) {
       pr.show(max: 100, msg: '下载中...');
@@ -204,6 +204,7 @@ class AppUpdateService {
         LogUtil.e("下载异常，请稍后重试");
         if (pr.isOpen()) {
           pr.close();
+          IsolateNameServer.removePortNameMapping('downloader_send_port');
         }
       }
 
@@ -212,6 +213,7 @@ class AppUpdateService {
         LogUtil.i("下载完成!");
         if (pr.isOpen()) {
           pr.close();
+          IsolateNameServer.removePortNameMapping('downloader_send_port');
         }
 
         Future.delayed(Duration(seconds: 1), () => _installApk(savePath, apkName));
@@ -233,7 +235,8 @@ class AppUpdateService {
       Fluttertoast.showToast(msg: '文件不存在，请重新下载');
       return;
     }
-    await OpenFile.open(apk.path);
+    var result = await OpenFile.open(apk.path);
+    LogUtil.i('install result: ${result.type}');
   }
 
   var _apkLocalPath;
