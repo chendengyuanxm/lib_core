@@ -108,7 +108,7 @@ class AppUpdateService {
     String json = jsonEncode(result.data);
     version = onUpdateParser?.call(json);
     if (version != null) {
-      apkName = 'app-${version!.versionCode}.apk';
+      apkName = 'app-${version!.versionCode}-${DateTime.now().millisecondsSinceEpoch}.apk';
       await _checkVersionCode();
       int timeStamp = DateTime.now().millisecondsSinceEpoch;
       await SharedPreference.setInt('lastUpdateTime', timeStamp);
