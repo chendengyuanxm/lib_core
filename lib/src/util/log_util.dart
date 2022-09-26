@@ -18,6 +18,7 @@ extension LogPriorityExt on LogPriority{
     LogPriority.error: 7,
   };
   int get level => map[this]!;
+  String get abbr => this.name.substring(0, 1);
 }
 
 class LogConfig {
@@ -66,13 +67,13 @@ class LogUtil {
     tag = tag ?? _tagValue;
     String data = object?.toString() ?? 'null';
     if (data.length <= _maxLen) {
-      print('————————————————————————————$tag${priority.name}——————————————————————————————————');
+      print('————————————————————————————$tag ${priority.abbr}——————————————————————————————————');
       print("$data");
       print('——————————————————————————————————————————————————————————————————————');
       return;
     }
     print(
-        '————————————————————————————$tag${priority.name}————————————————————————————————————');
+        '————————————————————————————$tag ${priority.abbr}————————————————————————————————————');
     while (data.isNotEmpty) {
       if (data.length > _maxLen) {
         print("${data.substring(0, _maxLen)}");
