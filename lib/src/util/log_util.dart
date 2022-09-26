@@ -1,6 +1,27 @@
 
+enum LogPriority {
+  verbose,
+  debug,
+  json,
+  info,
+  warn,
+  error,
+}
+
+extension LogPriorityExt on LogPriority{
+  static const map = {
+    LogPriority.verbose: 2,
+    LogPriority.debug: 3,
+    LogPriority.json: 4,
+    LogPriority.info: 5,
+    LogPriority.warn: 6,
+    LogPriority.error: 7,
+  };
+  int get level => map[this]!;
+}
+
 class LogConfig {
-  int? priority;
+  LogPriority? priority;
   String? tag;
   int? maxLen;
 
@@ -8,14 +29,7 @@ class LogConfig {
 }
 
 class LogUtil {
-  static const int VERBOSE = 2;
-  static const int DEBUG = 3;
-  static const int JSON = 4;
-  static const int INFO = 5;
-  static const int WARN = 6;
-  static const int ERROR = 7;
-
-  static int _logPriority = VERBOSE;
+  static LogPriority _logPriority = LogPriority.verbose;
   static const String _defTag = "debug";
   static int _maxLen = 128;
   static String _tagValue = _defTag;
@@ -27,38 +41,38 @@ class LogUtil {
   }
 
   static void v(Object? object, {String? tag}) {
-    _printLog(VERBOSE, tag, object);
+    _printLog(LogPriority.verbose, tag, object);
   }
 
   static void d(Object? object, {String? tag}) {
-    _printLog(DEBUG, tag, object);
+    _printLog(LogPriority.debug, tag, object);
   }
 
   static void i(Object? object, {String? tag}) {
-    _printLog(INFO, tag, object);
+    _printLog(LogPriority.info, tag, object);
   }
 
   static void w(Object? object, {String? tag}) {
-    _printLog(WARN, tag, object);
+    _printLog(LogPriority.warn, tag, object);
   }
 
   static void e(Object? object, {String? tag}) {
-    _printLog(ERROR, tag, object);
+    _printLog(LogPriority.error, tag, object);
   }
 
-  static void _printLog(int priority, String? tag, Object? object) {
-    if (priority < _logPriority) return;
+  static void _printLog(LogPriority priority, String? tag, Object? object) {
+    if (priority.level < _logPriority.level) return;
 
     tag = tag ?? _tagValue;
     String data = object?.toString() ?? 'null';
     if (data.length <= _maxLen) {
-      print('————————————————————————————$tag$priority——————————————————————————————————');
+      print('————————————————————————————$tag${priority.name}——————————————————————————————————');
       print("$data");
       print('——————————————————————————————————————————————————————————————————————');
       return;
     }
     print(
-        '————————————————————————————$tag$priority————————————————————————————————————');
+        '————————————————————————————$tag${priority.name}————————————————————————————————————');
     while (data.isNotEmpty) {
       if (data.length > _maxLen) {
         print("${data.substring(0, _maxLen)}");
