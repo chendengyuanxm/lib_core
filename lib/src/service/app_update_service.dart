@@ -67,10 +67,12 @@ class AppUpdateService {
     Map<String, dynamic>? param,
     String method = 'GET',
     bool silent = false,
+    bool alwaysCheck = true,
   }) async {
     LogUtil.i('check update');
     this.context = context;
     this.silent = silent;
+    this.alwaysCheck = alwaysCheck;
     this.url = url;
     this.param = param;
     this.method = method;
