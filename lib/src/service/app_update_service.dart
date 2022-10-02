@@ -95,9 +95,9 @@ class AppUpdateService {
     HttpResult? result;
     try {
       if (method == 'GET') {
-        result = await http.HttpClient().get<dynamic>(url!, param??{});
+        result = await http.HttpClient().get<dynamic>(url!, param??{}, isShowProgress: !silent);
       } else {
-        result = await http.HttpClient().get<dynamic>(url!, param??{});
+        result = await http.HttpClient().post<dynamic>(url!, {}, body: param, isShowProgress: !silent);
       }
     } catch (e) {
       LogUtil.e(e);
