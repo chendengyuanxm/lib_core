@@ -151,9 +151,19 @@ class HttpClient {
         Options? options,
         CancelToken? cancelToken,
         ProgressCallback? onReceiveProgress,
+        bool? isCheckNetwork,
       }) async {
     LogUtil.i('downloadFile() url:$url  savePath:$savePath');
     bool isSuccess;
+    isCheckNetwork ??= _httpConfig.isCheckNetwork;
+
+    if (isCheckNetwork) {
+      ///判断网络连接
+      ConnectivityResult connResult = await Connectivity().checkConnectivity();
+      if (connResult == ConnectivityResult.none) {
+        throw HttpRequestException(-1, HttpCode.networkError, '无网络连接，请检查网络设置');
+      }
+    }
 
     ///添加CancelToken,用于取消请求
     cancelToken ??= CancelToken();
@@ -232,6 +242,7 @@ class HttpClient {
       LogUtil.e(e.stackTrace.toString());
       throw HttpRequestException(-1, HttpCode.unKnowError, e.toString());
     } finally {
+      _showLoading = false;
       if (isShowProgress && !isAlreadyLoading) {
         _dismissProgress();
       }
