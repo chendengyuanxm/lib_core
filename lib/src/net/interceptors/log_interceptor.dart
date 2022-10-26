@@ -1,12 +1,22 @@
 import 'package:dio/dio.dart';
 import 'dart:math' as math;
 
+import 'package:lib_core/src/util/index.dart';
+import 'package:logger/logger.dart';
+
 class LogsInterceptors extends InterceptorsWrapper {
   final logSize = 128;
+  var logger = Logger(
+    printer: PrettyPrinter(
+      methodCount: 0,
+      printEmojis: false,
+      noBoxingByDefault: true,
+    ),
+  );
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    print('-------------------------- Request -----------------------------');
+    _print('-------------------------- Request -----------------------------');
     printKV('uri', options.uri);
     printKV('method', options.method);
     printKV('contentType', options.contentType.toString());
@@ -18,30 +28,30 @@ class LogsInterceptors extends InterceptorsWrapper {
     printKV('header', stringBuffer.toString());
     stringBuffer.clear();
 
-    print("data:");
-    printAll(options.data);
-    print('-------------------------- Request -----------------------------');
+    _print("data:");
+    printAll(options.data.toString());
+    _print('-------------------------- Request -----------------------------');
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print('-------------------------- Response -----------------------------');
+    _print('-------------------------- Response -----------------------------');
     _printResponse(response);
-    print('-------------------------- Response -----------------------------');
+    _print('-------------------------- Response -----------------------------');
     super.onResponse(response, handler);
   }
 
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
-    print('-------------------------- Error -----------------------------');
+    _print('-------------------------- Error -----------------------------');
     var options = err.requestOptions;
     printKV('uri', options.uri);
     printKV('method', options.method);
     if (err.response != null) {
       _printResponse(err.response!);
     }
-    print('-------------------------- Error -----------------------------');
+    _print('-------------------------- Error -----------------------------');
     super.onError(err, handler);
   }
 
@@ -50,20 +60,29 @@ class LogsInterceptors extends InterceptorsWrapper {
     printKV('statusCode', response.statusCode);
     if(response.isRedirect!)
       printKV('redirect',response.realUri);
-    print("headers:");
-    print(" " + response.headers.toString().replaceAll("\n", "\n "));
+    _print("headers:");
+    _print(" " + response.headers.toString().replaceAll("\n", "\n "));
 
-    print("Response Text:");
-    printAll(response.toString());
-    print("");
+    _print("Response Text:");
+    printAll(response.data);
+    _print("");
+  }
+
+  _print(msg) {
+    logger.d(msg);
   }
 
   printKV(String key, Object? v) {
-    print('$key: $v');
+    logger.d('$key: $v');
   }
 
   printAll(msg) {
-    msg.toString().split("\n").forEach(_printAll);
+    if (msg.toString().length < 5000) {
+      logger.d(msg);
+    } else {
+      logger.d(msg.toString());
+    }
+    // msg.toString().split("\n").forEach(_printAll);
   }
 
   _printAll(String msg) {
