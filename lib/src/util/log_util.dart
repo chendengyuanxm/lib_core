@@ -20,20 +20,8 @@ extension LogPriority2Level on LogPriority {
     LogPriority.error: Level.error,
   };
   Level get level => map[this] ?? Level.nothing;
+  String get abbr => this.name.substring(0, 1);
 }
-
-// extension LogPriorityExt on LogPriority{
-//   static const map = {
-//     LogPriority.verbose: 2,
-//     LogPriority.debug: 3,
-//     LogPriority.json: 4,
-//     LogPriority.info: 5,
-//     LogPriority.warn: 6,
-//     LogPriority.error: 7,
-//   };
-//   int get level => map[this]!;
-//   String get abbr => this.name.substring(0, 1);
-// }
 
 class LogConfig {
   LogPriority? priority;
@@ -62,6 +50,7 @@ class LogUtil {
         lineLength: _maxLen,
         printEmojis: false,
         printTime: false,
+        noBoxingByDefault: true,
       ),
     );
   }
@@ -91,28 +80,24 @@ class LogUtil {
   }
 
   static void _printLog(LogPriority priority, String? tag, Object? object) {
-    logger.log(priority.level, object);
-    // if (priority.level < _logPriority.level) return;
-    //
-    // tag = tag ?? _tagValue;
-    // String data = object?.toString() ?? 'null';
-    // if (data.length <= _maxLen) {
-    //   print('————————————————————————————$tag ${priority.abbr}——————————————————————————————————');
-    //   print("$data");
-    //   print('——————————————————————————————————————————————————————————————————————');
-    //   return;
-    // }
-    // print(
-    //     '————————————————————————————$tag ${priority.abbr}————————————————————————————————————');
-    // while (data.isNotEmpty) {
-    //   if (data.length > _maxLen) {
-    //     print("${data.substring(0, _maxLen)}");
-    //     data = data.substring(_maxLen, data.length);
-    //   } else {
-    //     print("$data");
-    //     data = "";
-    //   }
-    // }
-    // print('——————————————————————————————————————————————————————————————————————');
+    tag = tag ?? _tagValue;
+    String data = object?.toString() ?? 'null';
+    if (data.length <= _maxLen) {
+      logger.log(priority.level, '————————————————————————————————————————————————————————$tag ${priority.abbr}———————————————————————————————————————————————————————————————');
+      logger.log(priority.level, data);
+      logger.log(priority.level, '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————');
+    } else {
+      logger.log(priority.level, '————————————————————————————————————————————————————————$tag ${priority.abbr}———————————————————————————————————————————————————————————————');
+      while (data.isNotEmpty) {
+        if (data.length > _maxLen) {
+          logger.log(priority.level, data.substring(0, _maxLen));
+          data = data.substring(_maxLen, data.length);
+        } else {
+          logger.log(priority.level, data);
+          data = "";
+        }
+      }
+      logger.log(priority.level, '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————');
+    }
   }
 }

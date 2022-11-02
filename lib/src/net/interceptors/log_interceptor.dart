@@ -45,9 +45,6 @@ class LogsInterceptors extends InterceptorsWrapper {
   @override
   void onError(DioError err, ErrorInterceptorHandler handler) {
     _print('-------------------------- Error -----------------------------');
-    var options = err.requestOptions;
-    printKV('uri', options.uri);
-    printKV('method', options.method);
     if (err.response != null) {
       _printResponse(err.response!);
     }
@@ -63,7 +60,7 @@ class LogsInterceptors extends InterceptorsWrapper {
     _print("headers:");
     _print(" " + response.headers.toString().replaceAll("\n", "\n "));
 
-    _print("Response Text:");
+    _print("Response:");
     printAll(response.data);
     _print("");
   }
