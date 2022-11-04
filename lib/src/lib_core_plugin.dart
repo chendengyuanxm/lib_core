@@ -23,7 +23,7 @@ class LibCorePlugin {
     /// 初始化toast config
     ToastUtil.init(toast);
     /// 初始化日志 config
-    LogUtil.init(logConfig);
+    await LogUtil.init(logConfig);
     /// 初始化SharePreferences
     await SharedPreference.init();
   }

@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:lib_core/lib_core.dart';
 import 'package:logger/logger.dart';
+import 'package:logger/src/outputs/file_output.dart';
 
 enum LogPriority {
   verbose,
@@ -27,8 +31,9 @@ class LogConfig {
   LogPriority? priority;
   String? tag;
   int? maxLen;
+  bool? saveLocalLog;
 
-  LogConfig({this.priority, this.tag, this.maxLen});
+  LogConfig({this.priority, this.tag, this.maxLen, this.saveLocalLog = false});
 }
 
 class LogUtil {
@@ -36,12 +41,24 @@ class LogUtil {
   static const String _defTag = "debug";
   static int _maxLen = 128;
   static String _tagValue = _defTag;
+  static bool _saveLocalLog = false;
   static var logger = Logger();
 
-  static void init(LogConfig? config) {
+  static Future<File> get file async {
+    String dir = await FileUtil.tempPath;
+    File file = File('$dir/logs/log-${formatDate(DateTime.now(), [yyyy, mm, dd])}.txt');
+    if (!file.existsSync()) {
+      file.createSync(recursive: true);
+    }
+    print('创建日志文件：${file.path}');
+    return file;
+  }
+
+  static init(LogConfig? config) async {
     _tagValue = config?.tag ?? _tagValue;
     _logPriority = config?.priority ?? _logPriority;
     _maxLen = config?.maxLen ?? _maxLen;
+    _saveLocalLog = config?.saveLocalLog ?? _saveLocalLog;
 
     logger = Logger(
       level: _logPriority.level,
@@ -52,6 +69,10 @@ class LogUtil {
         printTime: false,
         noBoxingByDefault: true,
       ),
+      output: MultiOutput([
+        ConsoleOutput(),
+        if (_saveLocalLog) FileOutput(file: await file),
+      ]),
     );
   }
 
