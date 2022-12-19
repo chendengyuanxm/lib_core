@@ -3,7 +3,7 @@
 /// @description: 
 abstract class IToast {
 
-  void show(String? msg, {bool isShowLong = false});
+  void show(String? msg, {bool isShowLong = false, double? fontSize});
 
-  void showDebug(String? msg, {bool isShowLong = false});
+  void showDebug(String? msg, {bool isShowLong = false, double? fontSize});
 }

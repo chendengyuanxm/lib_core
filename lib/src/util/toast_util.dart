@@ -17,11 +17,11 @@ class ToastUtil {
     }
   }
 
-  static void show(String? msg, {bool isShowLong = false}) {
-    _toast.show(msg, isShowLong: isShowLong);
+  static void show(String? msg, {bool isShowLong = false, double? fontSize}) {
+    _toast.show(msg, isShowLong: isShowLong, fontSize: fontSize);
   }
 
-  static void showDebug(String? msg, {bool isShowLong = false}) {
-    _toast.showDebug(msg, isShowLong: isShowLong);
+  static void showDebug(String? msg, {bool isShowLong = false, double? fontSize}) {
+    _toast.showDebug(msg, isShowLong: isShowLong, fontSize: fontSize);
   }
 }

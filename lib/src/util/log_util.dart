@@ -103,12 +103,13 @@ class LogUtil {
   static void _printLog(LogPriority priority, String? tag, Object? object) {
     tag = tag ?? _tagValue;
     String data = object?.toString() ?? 'null';
+    String time = formatDateTimestamp(DateTime.now().millisecondsSinceEpoch, formats: [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn, ':', ss]);
     if (data.length <= _maxLen) {
-      logger.log(priority.level, '————————————————————————————————————————————————————————$tag ${priority.abbr}———————————————————————————————————————————————————————————————');
+      logger.log(priority.level, '—————————————————————————$time $tag ${priority.abbr}——————————————————————————————————');
       logger.log(priority.level, data);
-      logger.log(priority.level, '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————');
+      logger.log(priority.level, '——————————————————————————————————————————————————————————————————————————————————————');
     } else {
-      logger.log(priority.level, '————————————————————————————————————————————————————————$tag ${priority.abbr}———————————————————————————————————————————————————————————————');
+      logger.log(priority.level, '————————————————————————————————————$tag ${priority.abbr}———————————————————————————————————————————');
       while (data.isNotEmpty) {
         if (data.length > _maxLen) {
           logger.log(priority.level, data.substring(0, _maxLen));
@@ -118,7 +119,7 @@ class LogUtil {
           data = "";
         }
       }
-      logger.log(priority.level, '——————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————');
+      logger.log(priority.level, '——————————————————————————————————————————————————————————————————————————————————————');
     }
   }
 }

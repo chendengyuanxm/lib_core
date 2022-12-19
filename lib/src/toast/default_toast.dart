@@ -9,23 +9,23 @@ import 'package:lib_core/src/toast/i_toast.dart';
 class DefaultToast extends IToast {
 
   @override
-  void show(String? msg, {bool isShowLong = false}) {
+  void show(String? msg, {bool isShowLong = false, double? fontSize}) {
     if (msg == null || msg.isEmpty) {
       LogUtil.e('toast message can`t be empty');
       return;
     }
 
-    Fluttertoast.showToast(msg: msg, toastLength: isShowLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT);
+    Fluttertoast.showToast(msg: msg, toastLength: isShowLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT, fontSize: fontSize);
   }
 
   @override
-  void showDebug(String? msg, {bool isShowLong = false}) {
+  void showDebug(String? msg, {bool isShowLong = false, double? fontSize}) {
     if (msg == null || msg.isEmpty) {
       LogUtil.e('toast message can`t be empty');
       return;
     }
 
-    Fluttertoast.showToast(msg: msg, toastLength: isShowLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT, backgroundColor: Colors.red);
+    Fluttertoast.showToast(msg: msg, toastLength: isShowLong ? Toast.LENGTH_LONG : Toast.LENGTH_SHORT, fontSize: fontSize, backgroundColor: Colors.red);
   }
 
 }
