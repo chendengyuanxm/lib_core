@@ -4,10 +4,10 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:flutter_stetho_null_safety/flutter_stetho_null_safety.dart';
 import 'package:lib_core/lib_core.dart';
 import 'package:package_info/package_info.dart';
 import 'package:provider/provider.dart';
+import 'package:stetho_network_inspector/stetho_network_inspector.dart';
 
 import 'provider/core_providers.dart';
 import 'service/index.dart';
