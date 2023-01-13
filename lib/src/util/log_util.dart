@@ -73,6 +73,7 @@ class LogUtil {
         ConsoleOutput(),
         if (_saveLocalLog) FileOutput(file: await file),
       ]),
+      filter: ProductionFilter(),
     );
   }
 
