@@ -235,11 +235,11 @@ class HttpClient {
         throw HttpRequestException(result.httpCode, result.code, result.message);
       }
     } on DioError catch (dioErr) {
-      LogUtil.e(dioErr);
+      LogUtil.e(dioErr.message, stackTrace: dioErr.stackTrace);
       ErrorResult result = _createErrorBean(dioErr);
       throw HttpRequestException(result.httpCode, result.code, result.message);
     } on Error catch (e) {
-      LogUtil.e(e.stackTrace.toString());
+      LogUtil.e(e, stackTrace: e.stackTrace);
       throw HttpRequestException(-1, HttpCode.unKnowError, e.toString());
     } finally {
       _showLoading = false;
