@@ -70,10 +70,14 @@ class CacheUtil {
   }
 
   static Future<void> clearData() async {
-    Directory tempDir = await getApplicationDocumentsDirectory();
+    await DefaultCacheManager().emptyCache();
+    Directory tempDir = await getTemporaryDirectory();
     //删除缓存目录
     await _delDir(tempDir);
-    Fluttertoast.showToast(msg: '清除缓存成功');
+    Directory dataDir = await getApplicationDocumentsDirectory();
+    //删除数据目录
+    await _delDir(dataDir);
+    Fluttertoast.showToast(msg: '清除数据成功');
   }
 
   ///递归方式删除目录
