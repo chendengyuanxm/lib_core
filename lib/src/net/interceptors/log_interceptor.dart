@@ -5,6 +5,7 @@ import 'package:lib_core/src/util/index.dart';
 import 'package:logger/logger.dart';
 
 class LogsInterceptors extends InterceptorsWrapper {
+  bool isProduct = const bool.fromEnvironment("dart.vm.product");
   final logSize = 128;
   var logger = Logger(
     printer: PrettyPrinter(
@@ -17,6 +18,10 @@ class LogsInterceptors extends InterceptorsWrapper {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     _print('-------------------------- Request -----------------------------');
+    if (isProduct) {
+      LogUtil.i('uri: ${options.uri}');
+    }
+
     printKV('uri', options.uri);
     printKV('method', options.method);
     printKV('contentType', options.contentType.toString());

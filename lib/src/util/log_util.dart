@@ -77,37 +77,37 @@ class LogUtil {
     );
   }
 
-  static void v(Object? object, {String? tag}) {
+  static void v(Object? object, {String? tag, StackTrace? stackTrace}) {
     _printLog(LogPriority.verbose, tag, object);
   }
 
-  static void d(Object? object, {String? tag}) {
-    _printLog(LogPriority.debug, tag, object);
+  static void d(Object? object, {String? tag, StackTrace? stackTrace}) {
+    _printLog(LogPriority.debug, tag, object, stackTrace: stackTrace);
   }
 
-  static void i(Object? object, {String? tag}) {
-    _printLog(LogPriority.info, tag, object);
+  static void i(Object? object, {String? tag, StackTrace? stackTrace}) {
+    _printLog(LogPriority.info, tag, object, stackTrace: stackTrace);
   }
 
-  static void w(Object? object, {String? tag}) {
-    _printLog(LogPriority.warn, tag, object);
+  static void w(Object? object, {String? tag, StackTrace? stackTrace}) {
+    _printLog(LogPriority.warn, tag, object, stackTrace: stackTrace);
   }
 
-  static void e(Object? object, {String? tag}) {
-    _printLog(LogPriority.error, tag, object);
+  static void e(Object? object, {String? tag, StackTrace? stackTrace}) {
+    _printLog(LogPriority.error, tag, object, stackTrace: stackTrace);
   }
 
-  static void wtf(Object? object, {String? tag}) {
-    _printLog(LogPriority.wtf, tag, object);
+  static void wtf(Object? object, {String? tag, StackTrace? stackTrace}) {
+    _printLog(LogPriority.wtf, tag, object, stackTrace: stackTrace);
   }
 
-  static void _printLog(LogPriority priority, String? tag, Object? object) {
+  static void _printLog(LogPriority priority, String? tag, Object? object, {StackTrace? stackTrace}) {
     tag = tag ?? _tagValue;
     String data = object?.toString() ?? 'null';
     String time = formatDateTimestamp(DateTime.now().millisecondsSinceEpoch, formats: [yyyy, '-', mm, '-', dd, ' ', HH, ':', nn, ':', ss]);
     if (data.length <= _maxLen) {
       logger.log(priority.level, '—————————————————————————$time $tag ${priority.abbr}——————————————————————————————————');
-      logger.log(priority.level, data);
+      logger.log(priority.level, data, null, stackTrace);
       logger.log(priority.level, '——————————————————————————————————————————————————————————————————————————————————————');
     } else {
       logger.log(priority.level, '————————————————————————————————————$tag ${priority.abbr}———————————————————————————————————————————');
@@ -120,6 +120,7 @@ class LogUtil {
           data = "";
         }
       }
+      logger.log(priority.level, null, null, stackTrace);
       logger.log(priority.level, '——————————————————————————————————————————————————————————————————————————————————————');
     }
   }
