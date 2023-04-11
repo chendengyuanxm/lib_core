@@ -29,7 +29,7 @@ void runPreMain() async {
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
   /// 初始化FlutterDownload
-  await FlutterDownloader.initialize(debug: true);
+  await FlutterDownloader.initialize(debug: true, ignoreSsl: true);
 }
 
 void runPreApp(Widget app) {

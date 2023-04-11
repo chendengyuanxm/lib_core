@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:ui';
+import 'package:android_path_provider/android_path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -155,7 +156,7 @@ class AppUpdateService {
     _apkLocalPath = await _localPath;
 
     final path = await _apkLocalPath;
-    File file = File(downloadPath + apkName);
+    File file = File(path + apkName);
     if (await file.exists()) {
       LogUtil.i('delete ${file.path}');
       await file.delete();
@@ -174,7 +175,7 @@ class AppUpdateService {
     }
 
     // 必须先于enqueue执行
-    FlutterDownloader.registerCallback(downloadCallback);
+    FlutterDownloader.registerCallback(downloadCallback, step: 1);
 
     await FlutterDownloader.cancelAll();
     final taskId = await FlutterDownloader.enqueue(
@@ -223,6 +224,7 @@ class AppUpdateService {
     });
   }
 
+  @pragma('vm:entry-point')
   static downloadCallback(String id, DownloadTaskStatus status, int progress) {
     final SendPort? sendPort = IsolateNameServer.lookupPortByName('downloader_send_port');
     sendPort?.send([id, status, progress]);
@@ -244,11 +246,21 @@ class AppUpdateService {
   var _apkLocalPath;
 
   Future<String> get _localPath async {
-    final directory = Theme
-        .of(context)
-        .platform == TargetPlatform.android
-        ? await getTemporaryDirectory()
-        : await getApplicationSupportDirectory();
-    return directory.path;
+    String externalStorageDirPath;
+
+    if (Platform.isAndroid) {
+      try {
+        externalStorageDirPath = await AndroidPathProvider.downloadsPath;
+      } catch (err, st) {
+        print('failed to get downloads path: $err, $st');
+
+        final directory = await getExternalStorageDirectory();
+        externalStorageDirPath = directory?.path??'';
+      }
+    } else {
+      externalStorageDirPath =
+          (await getApplicationDocumentsDirectory()).absolute.path;
+    }
+    return externalStorageDirPath;
   }
 }
