@@ -17,7 +17,7 @@ void runPreMain() async {
   /// 打印APP INFO
   await _displayAppInfo();
   /// 检测网络
-  await _checkConnectivity();
+  // await _checkConnectivity();
   /// 调试开关
   _debugOptions();
   /// 注册服务
