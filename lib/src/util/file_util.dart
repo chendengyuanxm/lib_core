@@ -31,7 +31,7 @@ class FileUtil {
       }
     } else {
       externalStorageDirPath =
-          (await getApplicationDocumentsDirectory()).absolute.path;
+          (await getApplicationDocumentsDirectory()).absolute.path + '/download/';
     }
     return externalStorageDirPath;
   }
