@@ -5,8 +5,11 @@ import 'dart:ui';
 import 'package:android_path_provider/android_path_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_xupdate/flutter_xupdate.dart';
+import 'package:flutter_xupdate/update_entity.dart' as xupdate;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lib_core/lib_core.dart';
+import 'package:lib_core/src/core_const.dart';
 import 'package:lib_core/src/util/index.dart';
 import 'package:open_file/open_file.dart';
 import 'package:package_info/package_info.dart';
@@ -32,6 +35,12 @@ class UpdateEntity {
   UpdateEntity({required this.versionCode, this.versionName, this.downloadUrl, this.updateContent, this.size, this.isForce,});
 }
 
+class UpdateDialogStyle {
+  Color? primaryColor;
+  String? topImageRes;
+  UpdateDialogStyle({this.primaryColor, this.topImageRes});
+}
+
 class AppUpdateService {
   late BuildContext context;
   bool silent = false;
@@ -40,6 +49,7 @@ class AppUpdateService {
   Map<String, dynamic>? param;
   String method = 'GET';
   String? appleStoreUrl;
+  UpdateDialogStyle? updateDialogStyle;
   String apkName = '';
   UpdateEntity? version;
 
@@ -52,10 +62,24 @@ class AppUpdateService {
     String? appleStoreUrl,
     bool silent = false,
     bool alwaysCheck = true,
+    UpdateDialogStyle? updateDialogStyle,
   }) {
     this.silent = silent;
     this.alwaysCheck = alwaysCheck;
     this.appleStoreUrl = appleStoreUrl;
+    this.updateDialogStyle = updateDialogStyle;
+    initXUpdate();
+  }
+
+  initXUpdate() async {
+    await FlutterXUpdate.init(
+      debug: true,
+      timeout: 30000,
+      enableRetry: true,
+    );
+    FlutterXUpdate.setErrorHandler(onUpdateError: (Map<String, dynamic>? message) async {
+      ToastUtil.showDebug("$message}");
+    });
   }
 
   setUpdateHandler({OnUpdateParser? onUpdateParser, OnShowDownloadDialog? onShowDownloadDialog}) {
@@ -127,7 +151,24 @@ class AppUpdateService {
     int currentVersionCode = int.parse(_currentVersionCode);
     LogUtil.i('serviceVersionCode: $serviceVersionCode , currentVersionCode: $currentVersionCode');
     if (serviceVersionCode > currentVersionCode) {
-      _showUpdateDialog();
+      // _showUpdateDialog();
+      xupdate.UpdateEntity updateEntity = xupdate.UpdateEntity(
+        hasUpdate: true,
+        isForce: version!.isForce,
+        downloadUrl: version!.downloadUrl,
+        versionCode: version!.versionCode,
+        versionName: version!.versionName,
+        updateContent: version!.updateContent,
+        apkSize: (version!.size??0)~/1024,
+      );
+      String colorString = this.updateDialogStyle?.primaryColor != null ? '#${this.updateDialogStyle?.primaryColor!.value.toRadixString(16).padLeft(8, '0')}' : '';
+      await FlutterXUpdate.updateByInfo(
+        updateEntity: updateEntity,
+        supportBackgroundUpdate: true,
+        themeColor: colorString,
+        topImageRes: this.updateDialogStyle?.topImageRes ?? '',
+        widthRatio: 0.8,
+      );
     } else if (!silent) {
       Fluttertoast.showToast(msg: '当前已是最新版本！');
     }

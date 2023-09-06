@@ -57,6 +57,7 @@ dependencies:
       url: https://gitee.com/Devin_chen/flutter_fgbg.git
   flutter_easyloading: ^3.0.3
   logger: ^1.1.0
+  flutter_xupdate: ^2.0.4
 
 dev_dependencies:
   build_runner: ^2.0.0
