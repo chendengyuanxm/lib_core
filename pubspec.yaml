@@ -18,7 +18,7 @@ description: Flutter core library.
 version: 2.0.0+4
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -47,7 +47,7 @@ dependencies:
   hive: ^2.0.4
   hive_flutter: ^1.1.0
   get: ^4.6.1
-  flutter_downloader: ^1.10.2
+  flutter_downloader: ^1.10.5
   open_file: ^3.1.0
   sn_progress_dialog: ^1.0.3
   flutter_cache_manager: ^3.1.0
