@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/adapter.dart';
@@ -261,8 +262,16 @@ class HttpClient {
       return result;
     }
 
-    HttpResult<T> result = await _httpConfig.parseResult<T>(resp.statusCode!, resp.data, isList);
-    result.json = resp.data;
+    // transfer string response to map
+    Map<String, dynamic> jsonData;
+    if (resp.data is String) {
+      jsonData = jsonDecode(resp.data);
+    } else {
+      jsonData = resp.data;
+    }
+
+    HttpResult<T> result = await _httpConfig.parseResult<T>(resp.statusCode!, jsonData, isList);
+    result.json = jsonData;
     return result;
   }
 
