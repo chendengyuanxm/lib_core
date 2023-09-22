@@ -236,14 +236,14 @@ class AppUpdateService {
     }
     _receivePort.listen((data) {
       String id = data[0];
-      int status = data[1];
+      DownloadTaskStatus status = data[1];
       int progress = data[2];
-      LogUtil.i('[Download] $id , ${status} , $progress');
-      if (status == DownloadTaskStatus.running.value) {
+      LogUtil.i('[Download] $id , ${status.value} , $progress');
+      if (status == DownloadTaskStatus.running) {
         pr.update(value: progress, msg: "下载中，请稍后…");
       }
 
-      if (status == DownloadTaskStatus.failed.value) {
+      if (status == DownloadTaskStatus.failed) {
         Fluttertoast.showToast(msg: "下载异常，请稍后重试");
         LogUtil.e("下载异常，请稍后重试");
         if (pr.isOpen()) {
@@ -252,7 +252,7 @@ class AppUpdateService {
         }
       }
 
-      if (taskId == id && status == DownloadTaskStatus.complete.value) {
+      if (taskId == id && status == DownloadTaskStatus.complete) {
         Fluttertoast.showToast(msg: "下载完成!");
         LogUtil.i("下载完成!");
         if (pr.isOpen()) {
@@ -266,7 +266,7 @@ class AppUpdateService {
   }
 
   @pragma('vm:entry-point')
-  static downloadCallback(String id, int status, int progress) {
+  static downloadCallback(String id, DownloadTaskStatus status, int progress) {
     final SendPort? sendPort = IsolateNameServer.lookupPortByName('downloader_send_port');
     sendPort?.send([id, status, progress]);
   }

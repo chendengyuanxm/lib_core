@@ -292,7 +292,7 @@ packages:
       name: flutter_downloader
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.10.5"
+    version: "1.10.2"
   flutter_easyloading:
     dependency: "direct main"
     description:
