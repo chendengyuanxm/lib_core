@@ -164,7 +164,7 @@ class AppUpdateService {
       String colorString = this.updateDialogStyle?.primaryColor != null ? '#${this.updateDialogStyle?.primaryColor!.value.toRadixString(16).padLeft(8, '0')}' : '';
       await FlutterXUpdate.updateByInfo(
         updateEntity: updateEntity,
-        supportBackgroundUpdate: true,
+        supportBackgroundUpdate: !(version!.isForce??false),
         themeColor: colorString,
         topImageRes: this.updateDialogStyle?.topImageRes ?? '',
         widthRatio: 0.8,
