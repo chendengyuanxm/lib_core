@@ -78,7 +78,12 @@ class AppUpdateService {
       enableRetry: true,
     );
     FlutterXUpdate.setErrorHandler(onUpdateError: (Map<String, dynamic>? message) async {
-      ToastUtil.showDebug("$message}");
+      LogUtil.e('error: $message');
+      String errMsg = message?['message'] ?? message?['msg'] ?? '未知错误';
+      if (errMsg.contains('下载失败!(timeout)')) {
+        errMsg = '连接超时，请检查网络是否正常';
+      }
+      ToastUtil.showDebug(errMsg);
     });
   }
 
