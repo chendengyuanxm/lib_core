@@ -395,13 +395,13 @@ const List<String> dayShort = const [
 ];
 
 const List<String> dayLong = const [
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday',
-  'Sunday'
+  '星期一',
+  '星期二',
+  '星期三',
+  '星期四',
+  '星期五',
+  '星期六',
+  '星期日'
 ];
 
 int dayInYear(DateTime date) =>
